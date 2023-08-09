@@ -56,22 +56,24 @@ function woo_new_product_tab_content() {
 				echo '<li><span>' . $cleaned_name . ': </span>';
 
 				if (is_array($attribute_values)) {
+					$value_links = array();
 					foreach ($attribute_values as $value) {
 						if ($cleaned_name === 'автор' || $cleaned_name === 'издательство') {
 							$value_slug_prefix = '/' . $cleaned_name . '/';
 							$value_slug = sanitize_title($value);
-            				$value_url = $value_slug_prefix . $value_slug;
-							echo '<a href="' . esc_url($value_url) . '">' . $value . '</a>, ';
+							$value_url = $value_slug_prefix . $value_slug;
+							$value_links[] = '<a href="' . esc_url($value_url) . '">' . $value . '</a>';
 						} else {
-							echo $value . ', ';
+							$value_links[] = $value;
 						}
 					}
+					echo implode(', ', $value_links);
 				} else {
 					if ($cleaned_name === 'автор' || $cleaned_name === 'издательство') {
-							$attribute_values_slug_prefix = '/' . $cleaned_name . '/';
-							$attribute_values_slug = sanitize_title($attribute_values);
-            				$attribute_values_url = $attribute_values_slug_prefix . $attribute_values_slug;
-							echo '<a href="' . esc_url($attribute_values_url) . '">' . $attribute_values . '</a>, ';
+						$attribute_values_slug_prefix = '/' . $cleaned_name . '/';
+						$attribute_values_slug = sanitize_title($attribute_values);
+						$attribute_values_url = $attribute_values_slug_prefix . $attribute_values_slug;
+						echo '<a href="' . esc_url($attribute_values_url) . '">' . $attribute_values . '</a>';
 					} else {
 						echo $attribute_values;
 					}
